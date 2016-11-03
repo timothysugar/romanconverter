@@ -1,8 +1,11 @@
 package converter
 
-import "testing"
+import (
+"testing"
+"bytes"
+)
 
-func TestPrintI(t *testing.T) {
+func TestConvert(t *testing.T) {
 	cases := []struct {
 		in  int
 		exp string
@@ -25,6 +28,24 @@ func TestPrintI(t *testing.T) {
 
 		if res != c.exp {
 			t.Errorf("Convert(%d) Expected=%s Result=%s", c.in, c.exp, res)
+		}
+	}
+}
+
+func TestXs(t *testing.T) {
+	cases := []struct {
+		in  int
+		exp []byte
+	}{
+		{1, []byte("")},
+		{10, []byte("X")},
+	}
+
+	for _, c := range cases {
+		res := DetermineXs(c.in)
+
+		if !bytes.Equal(res, c.exp) {
+			t.Errorf("DetermineXs(%d) Expected=%d Result=%d", c.in, c.exp, res)
 		}
 	}
 }

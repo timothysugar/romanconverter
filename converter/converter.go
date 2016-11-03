@@ -1,30 +1,45 @@
 package converter
 
+import "bytes"
+
 func Convert(n int) string {
-	if n < 10 {
-		return BuildUnits(n)
-	}
-	return "X"
+	var buf bytes.Buffer
+
+	buf.Write(DetermineXs(n))
+	buf.Write(BuildUnits(n))
+
+	return buf.String()
 }
 
-func BuildUnits(n int) string {
+func BuildUnits(n int) []byte {
+	var u = n % 10
+
 	switch {
-	case n == 1:
-		return "I"
-	case n == 2:
-		return "II"
-	case n == 3:
-		return "III"
-	case n == 4:
-		return "IV"
-	case n == 5:
-		return "V"
-	case n == 6:
-		return "VI"
-	case n == 7:
-		return "VII"
-	case n == 8:
-		return "VIII"
+	case u == 0:
+		return []byte("")
+	case u == 1:
+		return []byte("I")
+	case u == 2:
+		return []byte("II")
+	case u == 3:
+		return []byte("III")
+	case u == 4:
+		return []byte("IV")
+	case u == 5:
+		return []byte("V")
+	case u == 6:
+		return []byte("VI")
+	case u == 7:
+		return []byte("VII")
+	case u == 8:
+		return []byte("VIII")
 	}
-	return "IX"
+	return []byte("IX")
+}
+
+func DetermineXs(n int) []byte {
+	if n >= 10 {
+		return []byte("X")
+	}
+	return []byte("")
 }
