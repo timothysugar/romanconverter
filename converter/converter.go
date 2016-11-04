@@ -1,11 +1,14 @@
 package converter
 
-import "bytes"
+import (
+	"bytes"
+	"math"
+	)
 
 func Convert(n int) string {
 	var buf bytes.Buffer
 
-	buf.Write(DetermineXs(n))
+	buf.Write(BuildTens(n))
 	buf.Write(BuildUnits(n))
 
 	return buf.String()
@@ -37,9 +40,14 @@ func BuildUnits(n int) []byte {
 	return []byte("IX")
 }
 
-func DetermineXs(n int) []byte {
-	if n >= 10 {
-		return []byte("X")
+func BuildTens(n int) []byte {
+	var t = math.Floor(float64(n)/ 10)
+	switch {
+		case t == 0:
+			return []byte("")
+		case t == 1:
+			return []byte("X")
 	}
-	return []byte("")
+
+	return []byte("XX")
 }

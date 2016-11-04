@@ -21,6 +21,8 @@ func TestConvert(t *testing.T) {
 		{9, "IX"},
 		{10, "X"},
 		{11, "XI"},
+		{12, "XII"},
+		{21, "XXI"},
 	}
 
 	for _, c := range cases {
@@ -32,20 +34,21 @@ func TestConvert(t *testing.T) {
 	}
 }
 
-func TestXs(t *testing.T) {
+func TestBuildTens(t *testing.T) {
 	cases := []struct {
 		in  int
 		exp []byte
 	}{
 		{1, []byte("")},
 		{10, []byte("X")},
+		{20, []byte("XX")},
 	}
 
 	for _, c := range cases {
-		res := DetermineXs(c.in)
+		res := BuildTens(c.in)
 
 		if !bytes.Equal(res, c.exp) {
-			t.Errorf("DetermineXs(%d) Expected=%d Result=%d", c.in, c.exp, res)
+			t.Errorf("BuildTens(%d) Expected=%d Result=%d", c.in, c.exp, res)
 		}
 	}
 }
