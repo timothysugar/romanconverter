@@ -1,7 +1,28 @@
 package main
 
-import "github.com/timothysugar/romanconverter/converter"
+import (
+	"fmt"
+	"github.com/timothysugar/romanconverter/converter"
+	"os"
+	"strconv"
+)
 
 func main() {
-	converter.Convert(1)
+	if len(os.Args) != 2 {
+		PrintUsage()
+		os.Exit(0)
+	}
+
+	var arg = os.Args[1]
+	if i, err := strconv.Atoi(arg); err != nil {
+		PrintUsage()
+	} else {
+		var res = converter.Convert(i)
+		fmt.Println(res)
+	}
+
+}
+
+func PrintUsage() {
+	fmt.Printf("Usage: Converts a single integer.\ne.g >./cli 10")
 }
